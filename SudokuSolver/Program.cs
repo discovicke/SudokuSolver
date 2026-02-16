@@ -27,10 +27,36 @@ class Program
 
     static bool SolveSudoku(int[][] board)
     {
+        for (var row = 0; row < 9; row++)
+        {
+            for (var col = 0; col < 9; col++)
+            {
+                if (board[row][col] == 0)
+                {
+                    for (var num = 1; num <= 9; num++)
+                    {
+                        if (IsValid(board, row, col, num))
+                        {
+                            board[row][col] = num;
+                            Console.WriteLine($"Attempting {row},{col} with {num}");
+                            
+                            if (SolveSudoku(board))
+                            {
+                                Console.WriteLine($"Success at {row},{col} with {num}");
+                                return true;
+                            }
+                            Console.WriteLine($"Failed at {row},{col} with {num}");
+                            board[row][col] = 0;
+                        }
+                    }
+                    return false;
+                }
+            }
+        }
         return true;
     }
 
-    bool isValid(int[][] board, int row, int col, int num)
+    static bool IsValid(int[][] board, int row, int col, int num)
     {
         // Is 'num' in current row?
         for (var x = 0; x < 9; x++)
