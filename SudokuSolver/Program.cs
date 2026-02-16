@@ -20,9 +20,14 @@ class Program
         board[7] = [0, 0, 0, 4, 1, 9, 0, 0, 5];
         board[8] = [0, 0, 0, 0, 8, 0, 0, 7, 9];
 
+        Console.WriteLine("Starting Board:");
+        PrintBoard(board);
+        
         Console.WriteLine("Starting Sudoku Solver");
         SolveSudoku(board);
         
+        Console.WriteLine("\nSolved Board:");
+        PrintBoard(board);
     }
 
     private static bool SolveSudoku(int[][] board)
@@ -39,20 +44,23 @@ class Program
                         {
                             board[row][col] = num;
                             Console.WriteLine($"Attempting {row},{col} with {num}");
-                            
+
                             if (SolveSudoku(board))
                             {
                                 Console.WriteLine($"Success at {row},{col} with {num}");
                                 return true;
                             }
+
                             Console.WriteLine($"Failed at {row},{col} with {num}");
                             board[row][col] = 0;
                         }
                     }
+
                     return false;
                 }
             }
         }
+
         return true;
     }
 
@@ -88,5 +96,24 @@ class Program
         }
 
         return true;
+    }
+
+    private static void PrintBoard(int[][] board)
+    {
+        for (var row = 0; row < 9; row++)
+        {
+            if (row % 3 == 0 && row != 0)
+                Console.WriteLine("------+-------+------");
+
+            for (var col = 0; col < 9; col++)
+            {
+                if (col % 3 == 0 && col != 0)
+                    Console.Write("| ");
+
+                Console.Write(board[row][col] == 0 ? ". " : board[row][col] + " ");
+            }
+
+            Console.WriteLine();
+        }
     }
 }
