@@ -1,4 +1,6 @@
-﻿namespace SudokuSolver;
+﻿using System.Diagnostics;
+
+namespace SudokuSolver;
 
 class Program
 {
@@ -23,11 +25,14 @@ class Program
         Console.WriteLine("Starting Board:");
         PrintBoard(board);
         
+        var stopwatch = Stopwatch.StartNew();
         Console.WriteLine("Starting Sudoku Solver");
         SolveSudoku(board);
+        stopwatch.Stop();
         
         Console.WriteLine("\nSolved Board:");
         PrintBoard(board);
+        Console.WriteLine($"Time taken: {stopwatch.ElapsedMilliseconds}ms");
     }
 
     private static bool SolveSudoku(int[][] board)
