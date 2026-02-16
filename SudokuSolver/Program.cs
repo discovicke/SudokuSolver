@@ -25,7 +25,7 @@ class Program
         
     }
 
-    static bool SolveSudoku(int[][] board)
+    private static bool SolveSudoku(int[][] board)
     {
         for (var row = 0; row < 9; row++)
         {
@@ -56,7 +56,7 @@ class Program
         return true;
     }
 
-    static bool IsValid(int[][] board, int row, int col, int num)
+    private static bool IsValid(int[][] board, int row, int col, int num)
     {
         // Is 'num' in current row?
         for (var x = 0; x < 9; x++)
