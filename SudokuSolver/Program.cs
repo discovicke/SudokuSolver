@@ -27,15 +27,17 @@ class Program
         
         var stopwatch = Stopwatch.StartNew();
         Console.WriteLine("Starting Sudoku Solver");
-        SolveSudoku(board);
+        long attempts = 0;
+        SolveSudoku(board, ref attempts);
         stopwatch.Stop();
         
         Console.WriteLine("\nSolved Board:");
         PrintBoard(board);
         Console.WriteLine($"Time taken: {stopwatch.ElapsedMilliseconds}ms");
+        Console.WriteLine($"Total attempts: {attempts}");
     }
 
-    private static bool SolveSudoku(int[][] board)
+    private static bool SolveSudoku(int[][] board, ref long attempts)
     {
         for (var row = 0; row < 9; row++)
         {
@@ -47,10 +49,11 @@ class Program
                     {
                         if (IsValid(board, row, col, num))
                         {
+                            attempts++;
                             board[row][col] = num;
                             Console.WriteLine($"Attempting {row},{col} with {num}");
 
-                            if (SolveSudoku(board))
+                            if (SolveSudoku(board, ref attempts))
                             {
                                 Console.WriteLine($"Success at {row},{col} with {num}");
                                 return true;
